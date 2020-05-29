@@ -7,18 +7,36 @@ const App = () => {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (todo) => {
-    setTodos([todo, ...todos]);
+    setTodos([...todos, todo]);
   };
 
   const deleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
+  const completeTodo = (id) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }
+        return todo;
+      })
+    );
+  };
+
   return (
     <div className="App">
       <h1>React Todo App</h1>
       <AddTodo addTodo={addTodo} />
-      <TodoList todos={todos} deleteTodo={deleteTodo} />
+      <TodoList
+        todos={todos}
+        deleteTodo={deleteTodo}
+        completeTodo={completeTodo}
+      />
     </div>
   );
 };
